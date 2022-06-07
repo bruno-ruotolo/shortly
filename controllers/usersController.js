@@ -10,11 +10,12 @@ export async function signIn(req, res) {
 
   try {
     const users = await db.query(`SELECT * FROM users WHERE email = $1`, [email]);
-    const { id: userId, password: userPassword } = users.rows[0];
 
-    if (!(users.rowCount > 0 && bcrypt.compareSync(password, userPassword))) {
+    if (!(users.rowCount > 0 && bcrypt.compareSync(password, users.rows[0].password))) {
       return res.sendStatus(401)
     };
+
+    const { id: userId } = users.rows[0];
 
     const secretKey = process.env.JWT_SECRET;
     const expire = { expiresIn: 60 * 60 * 24 * 30 };
@@ -23,7 +24,7 @@ export async function signIn(req, res) {
     await db.query(`INSERT INTO tokens (token, status) VALUES ($1,$2)`, [token, true]);
     const tokens = await db.query(`SELECT * FROM tokens WHERE token = $1`, [token]);
     const { id: tokenId } = tokens.rows[0]
-    await db.query(`INSERT INTO userToken (userId, tokenId) VALUES ($1,$2)`, [userId, tokenId]);
+    await db.query(`INSERT INTO "userToken" ("userId", "tokenId") VALUES ($1,$2)`, [userId, tokenId]);
 
     res.status(200).send(token);
   } catch (e) {
