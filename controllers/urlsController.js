@@ -65,3 +65,25 @@ export async function openURL(req, res) {
     res.sendStatus(500);
   }
 }
+
+export async function deleteURL(req, res) {
+  const { tokensResult: { userId } } = res.locals;
+  const { id } = req.params;
+
+  try {
+    const urlsResult = await db.query(
+      `SELECT * FROM urls WHERE id = $1`, [id]
+    )
+
+    if (urlsResult.rowCount === 0) return res.sendStatus(404);
+
+    const { userId: urlUserId } = urlsResult.rows[0];
+    if (urlUserId !== userId) return res.sendStatus(401);
+
+    await db.query(`DELETE FROM urls WHERE id = $1`, [id]);
+    res.sendStatus(204)
+  } catch (e) {
+    console.log(chalk.red.bold(e));
+    res.sendStatus(500);
+  }
+}
