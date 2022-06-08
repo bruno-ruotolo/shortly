@@ -9,6 +9,7 @@ import { deleteURL, getURL, openURL, postURL } from "../controllers/urlsControll
 const urlRouter = Router();
 
 urlRouter.post("/urls/shorten", tokenMiddleware, postURLValidate, postURL);
+urlRouter.get("/urls/:id", getURL);
 
 
 export default urlRouter;
