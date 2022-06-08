@@ -10,6 +10,6 @@ const urlRouter = Router();
 
 urlRouter.post("/urls/shorten", tokenMiddleware, postURLValidate, postURL);
 urlRouter.get("/urls/:id", getURL);
-
+urlRouter.get("/urls/open/:shortUrl", openURL);
 
 export default urlRouter;
