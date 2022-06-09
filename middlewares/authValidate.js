@@ -1,4 +1,4 @@
-import { signInSchema, signUpSchema } from "../schemas/usersSchemas.js";
+import { signInSchema, signUpSchema } from "../schemas/authSchemas.js";
 
 export function postSignIn(req, res, next) {
   const signIn = req.body;
