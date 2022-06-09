@@ -3,9 +3,9 @@ import { Router } from "express";
 import { signIn, signUp } from "../controllers/authController.js";
 import { postSignIn, postSignUp } from "../middlewares/authValidate.js";
 
-const usersRouter = Router();
+const authRouter = Router();
 
-usersRouter.post("/signin", postSignIn, signIn);
-usersRouter.post("/signup", postSignUp, signUp);
+authRouter.post("/signin", postSignIn, signIn);
+authRouter.post("/signup", postSignUp, signUp);
 
-export default usersRouter;
+export default authRouter;

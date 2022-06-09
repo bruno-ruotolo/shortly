@@ -22,3 +22,13 @@ CREATE TABLE tokens (
   status boolean NOT NULL,
   "createdAt" timestamp NOT NULL DEFAULT NOW()
 );
+
+SELECT
+  usr.id,
+  usr.name,
+  SUM(url."visitsCount") as "visitsCount"
+FROM
+  users as usr
+  JOIN urls as url ON asdsad = asda s
+WHERE
+  id = $ 1

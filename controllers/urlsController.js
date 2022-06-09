@@ -55,7 +55,7 @@ export async function openURL(req, res) {
     if (urlsResult.rowCount === 0) return res.sendStatus(404);
 
     await db.query(
-      `UPDATE urls SET "visitsCount" = "visitsCount" + 1 ${whereClause}`, [shortUrl]
+      `UPDATE urls SET "visitCount" = "visitCount" + 1 ${whereClause}`, [shortUrl]
     );
 
     const { url } = urlsResult.rows[0];
