@@ -5,7 +5,6 @@ import db from "../db.js";
 export async function getUser(req, res) {
   const { tokensResult: { userId } } = res.locals;
   const { id } = req.params;
-  console.log(userId, id)
 
   try {
     const usersResult = await db.query(
