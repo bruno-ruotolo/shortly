@@ -13,16 +13,20 @@ export async function getRanking(req, res) {
         SUM(ur."visitCount") as "visitCount" 
       FROM 
         users us
-        JOIN urls ur ON ur."userId" = us.id
+        LEFT JOIN urls ur ON ur."userId" = us.id
       GROUP BY 
         us.id
       ORDER BY 
-        "visitCount" DESC
+        "visitCount" DESC NULLS LAST
       LIMIT 10`
     );
 
-    const ranking = rankingResult.rows;
-    res.status(200).send(ranking)
+    const ranking = [];
+    rankingResult.rows.map(rank => {
+      if (!rank.visitCount) return ranking.push({ ...rank, visitCount: "0" });
+      ranking.push({ ...rank });
+    });
+    res.status(200).send(ranking);
   } catch (e) {
     console.log(chalk.red.bold(e));
     res.sendStatus(500);

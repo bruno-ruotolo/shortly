@@ -48,7 +48,7 @@ function createJSONUrl(user, urls) {
   });
 
   const userReturn = {
-    id, name, visitCount: visitCount || 0, shortenedUrls
+    id, name, visitCount: visitCount || "0", shortenedUrls
   }
 
   return (userReturn);
