@@ -59,7 +59,7 @@ export async function openURL(req, res) {
     );
 
     const { url } = urlsResult.rows[0];
-    res.redirect(url);
+    res.redirect(302, url);
   } catch (e) {
     console.log(chalk.red.bold(e));
     res.sendStatus(500);
